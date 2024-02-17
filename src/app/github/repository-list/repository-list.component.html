@@ -11,9 +11,10 @@
                 <p>Topics: {{ repo.topics?.join(', ') || 'N/A' }}</p>
             </mat-card-content>
         </mat-card>
-        <div>
-            <button (click)="loadPreviousPage()" [disabled]="!hasPreviousPage()">Previous</button>
-            <button (click)="loadNextPage()" [disabled]="!hasNextPage()">Next</button>
+        <div class="page">
+            <button class="page_button" (click)="loadPreviousPage()" [disabled]="!hasPreviousPage()">Previous</button>
+            <span class="page_info">Page {{ currentPage }}</span>
+            <button class="page_button" (click)="loadNextPage()" [disabled]="!hasNextPage()">Next</button>
         </div>
     </ng-container>
     <ng-template #loading>

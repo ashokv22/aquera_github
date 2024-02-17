@@ -28,11 +28,11 @@ export class RepositoryListComponent implements OnInit {
     });
   }
 
-  fetchRepositories(): void {
+  fetchRepositories(url?: string): void {
     this.loading = true;
     this.error = null;
 
-    this.githubApiService.getUserRepositories(this.username, this.currentPage, this.pageSize)
+    this.githubApiService.getUserRepositories(this.username, url)
       .subscribe({
         next: (response) => {
           console.log(response);
@@ -57,16 +57,18 @@ export class RepositoryListComponent implements OnInit {
   loadNextPage() {
     console.log('Loading next page');
     if (this.nextPageUrl) {
+      this.currentPage += 1;
       console.log('Has Next Page URL');
-      this.fetchRepositories();
+      this.fetchRepositories(this.nextPageUrl);
     }
   }
 
   loadPreviousPage() {
     console.log('Loading prev page');
     if (this.prevPageUrl) {
+      this.currentPage -= 1;
       console.log('Has Prev Page URL');
-      this.fetchRepositories();
+      this.fetchRepositories(this.prevPageUrl);
     }
   }
 

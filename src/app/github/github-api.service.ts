@@ -14,23 +14,25 @@ export class GithubApiService {
   ) { }
 
   getUser(username: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'Authorization': `token ${environment.apiToken}`
-    });
-    return this.http.get(`${environment.apiUrl}/users/${username}`, { headers });
+    // const headers = new HttpHeaders({
+    //   'Authorization': `token ${environment.apiToken}`
+    // });
+    return this.http.get(`${environment.apiUrl}/users/${username}`);
   }
 
-  getUserRepositories(username: string, pageIndex: number = 1, pageSize: number): Observable<RepositoryList> {
-    const url = `${environment.apiUrl}/users/${username}/repos`;
-    const headers = new HttpHeaders({
-      'Authorization': `token ${environment.apiToken}`
-    });
-    return this.http.get<Repository[]>(url, {
-      headers: headers,
+  getUserRepositories(username: string, url?: string): Observable<RepositoryList> {
+    var apiUrl = `${environment.apiUrl}/users/${username}/repos`;
+    // const headers = new HttpHeaders({
+    //   'Authorization': `token ${environment.apiToken}`
+    // });
+    if (url) {
+      apiUrl = url;
+    } else {
+      apiUrl = `${apiUrl}?page=1&per_page=10`; // Default to page 1 with 10 items per page
+    }
+    return this.http.get<Repository[]>(apiUrl, {
+      // headers: headers,
       observe: 'response',
-      params: new HttpParams()
-      .set('page', pageIndex)
-      .set('per_page', pageSize)
       }).pipe(
         map(response => {
           const linkHeader = response.headers.get('Link');
