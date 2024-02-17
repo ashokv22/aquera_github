@@ -1,0 +1,27 @@
+<!-- repository-list.component.html -->
+
+<div class="repos_list">
+    <ng-container *ngIf="repositories; else loading">
+        <mat-card *ngFor="let repo of repositories" class="repo-card" >
+            <mat-card-header>
+                <mat-card-title>{{ repo.name }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{ repo.description }}</p>
+                <p>Topics: {{ repo.topics?.join(', ') || 'N/A' }}</p>
+            </mat-card-content>
+        </mat-card>
+        <div>
+            <button (click)="loadPreviousPage()" [disabled]="!hasPreviousPage()">Previous</button>
+            <button (click)="loadNextPage()" [disabled]="!hasNextPage()">Next</button>
+        </div>
+    </ng-container>
+    <ng-template #loading>
+        <mat-spinner></mat-spinner>
+    </ng-template>
+
+</div>
+<!-- <mat-paginator [length]="totalRepositories"
+               [pageSize]="pageSize"
+               (page)="onPageChange($event)">
+</mat-paginator> -->
