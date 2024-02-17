@@ -1,28 +1,44 @@
-<!-- repository-list.component.html -->
-
-<div class="repos_list">
-    <ng-container *ngIf="repositories; else loading">
-        <mat-card *ngFor="let repo of repositories" class="repo-card" >
-            <mat-card-header>
-                <mat-card-title>{{ repo.name }}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p>{{ repo.description }}</p>
-                <p>Topics: {{ repo.topics?.join(', ') || 'N/A' }}</p>
-            </mat-card-content>
-        </mat-card>
-        <div class="page">
-            <button class="page_button" (click)="loadPreviousPage()" [disabled]="!hasPreviousPage()">Previous</button>
-            <span class="page_info">Page {{ currentPage }}</span>
-            <button class="page_button" (click)="loadNextPage()" [disabled]="!hasNextPage()">Next</button>
+<div class="container">
+    <div class="repositories-container" *ngIf="!isLoading">
+        <h1 class="profile">Repositories</h1>
+        <ng-container *ngIf="repositories == null">
+            <h2>No Repositories Found!</h2>
+        </ng-container>
+        <div class="repository" *ngFor="let repo of repositories">
+            <div class="repo-header">
+                <h3 class="repo-name"><a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a></h3>
+                <p class="repo-description">{{ repo.description }}</p>
+            </div>
+            <div class="repo-footer">
+                <p class="repo-info">
+                    <ng-container *ngIf="repo.last_updated">
+                        Last updated: {{ repo.last_updated | date: 'medium' }}
+                    </ng-container>
+                    <ng-container *ngIf="repo.language">
+                        | Language: {{ repo.language }}
+                    </ng-container>
+                    <ng-container *ngIf="repo.stars">
+                        | Stars: {{ repo.stars }}
+                    </ng-container>
+                    <ng-container *ngIf="repo.forks">
+                        | Forks: {{ repo.forks }}
+                    </ng-container>
+                    <ng-container *ngIf="repo.forked_from">
+                        | Forked from: {{ repo.forked_from }}
+                    </ng-container>
+                    <ng-container *ngIf="repo.updated_at">
+                        | Updated at: {{ repo.updated_at | date }}
+                    </ng-container>
+                </p>
+            </div>
         </div>
-    </ng-container>
-    <ng-template #loading>
-        <mat-spinner></mat-spinner>
-    </ng-template>
-
+        <div class="page">
+            <button class="git_button" (click)="loadPreviousPage()" [disabled]="!hasPreviousPage()">Previous</button>
+            <span class="page_info">Page {{ currentPage }}</span>
+            <button class="git_button" (click)="loadNextPage()" [disabled]="!hasNextPage()">Next</button>
+        </div>
+    </div>
+    <div *ngIf="isLoading" class="spinner-container">
+        <mat-spinner class="spinner"></mat-spinner>
+    </div>
 </div>
-<!-- <mat-paginator [length]="totalRepositories"
-               [pageSize]="pageSize"
-               (page)="onPageChange($event)">
-</mat-paginator> -->

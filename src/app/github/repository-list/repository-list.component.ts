@@ -14,7 +14,7 @@ export class RepositoryListComponent implements OnInit {
   totalRepositories: number = 0;
   pageSize: number = 5;
   currentPage: number = 1;
-  loading: boolean = false;
+  isLoading: boolean = false;
   error: string | null = null;
   nextPageUrl: string | null = null;
   prevPageUrl: string | null = null;
@@ -29,7 +29,7 @@ export class RepositoryListComponent implements OnInit {
   }
 
   fetchRepositories(url?: string): void {
-    this.loading = true;
+    this.isLoading = true;
     this.error = null;
 
     this.githubApiService.getUserRepositories(this.username, url)
@@ -40,19 +40,16 @@ export class RepositoryListComponent implements OnInit {
           // this.totalRepositories = response.totalCount;
           this.nextPageUrl = response.nextPageUrl;
           this.prevPageUrl = response.prevPageUrl;
-          this.loading = false;
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 2000);
         },
         error: (error) => {
           this.error = 'Failed to fetch repositories. Please try again later.';
-          this.loading = false;
+          this.isLoading = false;
         }
       });
   }
-
-  // onPageChange(event: any) {
-  //   this.currentPage = event.pageIndex + 1;
-  //   this.fetchRepositories();
-  // }
 
   loadNextPage() {
     console.log('Loading next page');

@@ -11,6 +11,7 @@ export class ProfileComponent implements OnInit {
 
   username: string = "";
   user: any;
+  isLoading: boolean = true;
 
   constructor(
     private route: ActivatedRoute, 
@@ -25,10 +26,13 @@ export class ProfileComponent implements OnInit {
   }
 
   getUser(): void {
-    this.githubApiService.getUser(this.username).subscribe(user => {
-      console.log(user);
-      this.user = user;
-    });
+    setTimeout(() => {
+      this.githubApiService.getUser(this.username).subscribe(user => {
+        console.log(user);
+        this.user = user;
+        this.isLoading = false
+      });
+    }, 100);
   }
 
 }

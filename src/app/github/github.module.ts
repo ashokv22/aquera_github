@@ -6,9 +6,8 @@ import { GithubApiService } from './github-api.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
 import { GithubRoutingModule } from './github-routing.module';
-
 
 
 @NgModule({
@@ -21,7 +20,7 @@ import { GithubRoutingModule } from './github-routing.module';
     MatCardModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    MatPaginatorModule,
+    MatIconModule,
     GithubRoutingModule
   ],
   providers: [
