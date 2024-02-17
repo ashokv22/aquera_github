@@ -61,4 +61,12 @@ export class GithubApiService {
     return links;
   }
 
+  searchUsers(query: string): Observable<any[]> {
+    const apiUrl = `${environment.apiUrl}/search/users`
+    const params = { q: query, per_page: 5 };
+    return this.http.get<any>(apiUrl, { params }).pipe(
+      map(response => response.items)
+    );
+  }
+
 }

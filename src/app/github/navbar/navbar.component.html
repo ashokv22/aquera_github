@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+    <span class="github-icon" (click)="redirectToHome()">
+      <img src="assets/images/github-mark-white.png" alt="GitHub"/>
+    </span>
+    <span class="example-spacer"></span>
+    <div class="search-user">
+        <form [formGroup]="searchForm">
+            <mat-form-field>
+                <input type="text" matInput placeholder="Search for a GitHub user" formControlName="searchControl" [matAutocomplete]="auto">                
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option>
+                        <mat-spinner diameter="20" class="spinner"></mat-spinner>
+                    </mat-option>
+                    <mat-option *ngFor="let user of filteredUsers" [value]="user.login" (click)="redirectToProfile(user.login)">
+                        {{ user.login }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>          
+        </form>
+    </div>
+      
+  </mat-toolbar>
+  

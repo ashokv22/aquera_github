@@ -1,6 +1,5 @@
 <div class="container">
-    <div class="card" *ngIf="!isLoading">
-        <h1 class="profile">Profile</h1>
+    <div class="card" *ngIf="!isLoading && !isUserNotFound">
         <div class="github-card">
             <div class="user-details">
                 <div class="avatar">
@@ -44,5 +43,8 @@
 
     <div *ngIf="isLoading" class="spinner-container">
         <mat-spinner class="spinner"></mat-spinner>
+    </div>
+    <div *ngIf="isUserNotFound">
+        <h1>User not found!</h1>
     </div>
 </div>
